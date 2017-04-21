@@ -5,36 +5,43 @@ import os
 
 
 IMAGES = [
-    'etcd-amd64',
-    'kube-apiserver-amd64',
-    'kube-controller-manager-amd64',
-    'kube-scheduler-amd64',
-    'pause-amd64'
+    'gcr.io/google_containers/etcd-amd64',
+    'gcr.io/google_containers/kube-apiserver-amd64',
+    'gcr.io/google_containers/kube-controller-manager-amd64',
+    'gcr.io/google_containers/kube-scheduler-amd64',
+    'gcr.io/google_containers/pause-amd64',
+    'quay.io/coreos/flannel'
 ]
 
 
-for image in IMAGES:
-    print('dealing with ' + image)
-    raw_json = urllib2.urlopen('https://gcr.io/v2/google-containers/' + image + '/tags/list').read()
+def get_tag_url(image_url):
+    [domain, owner, image_name] = image_url.split('/')
+
+    if domain == 'gcr.io':
+        return 'https://gcr.io/v2/' + owner + '/' + image_name + '/tags/list'
+    elif domain == 'quay.io':
+        return 'https://quay.io/v2/' + owner + '/' + image_name + '/tags/list'
+
+
+for image_url in IMAGES:
+    print('dealing with ' + image_url)
+
+    raw_json = urllib2.urlopen(get_tag_url(image_url)).read()
     parsed_json = json.loads(raw_json)
     tags = parsed_json['tags']
-
+    image_name = image_url.split('/')[-1]
 
     for tag in tags:
-        filepath = os.path.join(os.getcwd(), image, tag, 'Dockerfile')
-
+        filepath = os.path.join(os.getcwd(), image_name, tag, 'Dockerfile')
 
         try:
-            docker_file = file(filepath, 'w+');
-
+            docker_file = file(filepath, 'w+')
 
         except IOError as e:
             os.makedirs(os.path.dirname(filepath))
-            docker_file = file(filepath, 'w+');
-
+            docker_file = file(filepath, 'w+')
 
         except Exception as e:
             raise
 
-
-        print('FROM gcr.io/google_containers/' + image + ':' + tag, file = docker_file)
+        print('FROM ' + image_url + ':' + tag, file=docker_file)
