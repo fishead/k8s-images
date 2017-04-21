@@ -10,7 +10,16 @@ IMAGES = [
     'gcr.io/google_containers/kube-controller-manager-amd64',
     'gcr.io/google_containers/kube-scheduler-amd64',
     'gcr.io/google_containers/pause-amd64',
-    'quay.io/coreos/flannel'
+    'quay.io/coreos/flannel',
+    'gcr.io/google_containers/kube-proxy-amd64',
+    'gcr.io/google_containers/k8s-dns-kube-dns-amd64',
+    'gcr.io/google_containers/k8s-dns-sidecar-amd64',
+    'gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64',
+    'gcr.io/google_containers/pause-amd64',
+    'gcr.io/google_containers/kube-discovery-amd64',
+    'gcr.io/google_containers/kube-dnsmasq-amd64',
+    'gcr.io/google_containers/kubedns-amd64',
+    'gcr.io/google_containers/kubernetes-dashboard-amd64'
 ]
 
 
