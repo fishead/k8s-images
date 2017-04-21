@@ -8,7 +8,8 @@ IMAGES = [
     'etcd-amd64',
     'kube-apiserver-amd64',
     'kube-controller-manager-amd64',
-    'kube-scheduler-amd64'
+    'kube-scheduler-amd64',
+    'pause-amd64'
 ]
 
 
