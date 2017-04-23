@@ -10,7 +10,6 @@ IMAGES = [
     'gcr.io/google_containers/kube-controller-manager-amd64',
     'gcr.io/google_containers/kube-scheduler-amd64',
     'gcr.io/google_containers/pause-amd64',
-    'quay.io/coreos/flannel',
     'gcr.io/google_containers/kube-proxy-amd64',
     'gcr.io/google_containers/k8s-dns-kube-dns-amd64',
     'gcr.io/google_containers/k8s-dns-sidecar-amd64',
@@ -19,7 +18,12 @@ IMAGES = [
     'gcr.io/google_containers/kube-discovery-amd64',
     'gcr.io/google_containers/kube-dnsmasq-amd64',
     'gcr.io/google_containers/kubedns-amd64',
-    'gcr.io/google_containers/kubernetes-dashboard-amd64'
+    'gcr.io/google_containers/kubernetes-dashboard-amd64',
+    'quay.io/coreos/flannel',
+    'quay.io/calico/node',
+    'quay.io/calico/cni',
+    'quay.io/coreos/etcd',
+    'quay.io/calico/kube-policy-controller'
 ]
 
 
@@ -32,6 +36,10 @@ def get_tag_url(image_url):
         return 'https://quay.io/v2/' + owner + '/' + image_name + '/tags/list'
 
 
+def to_kebab_case(str):
+    return str.replace('/', '.')
+
+
 for image_url in IMAGES:
     print('dealing with ' + image_url)
 
@@ -41,7 +49,7 @@ for image_url in IMAGES:
     image_name = image_url.split('/')[-1]
 
     for tag in tags:
-        filepath = os.path.join(os.getcwd(), image_name, tag, 'Dockerfile')
+        filepath = os.path.join(os.getcwd(), to_kebab_case(image_url), tag, 'Dockerfile')
 
         try:
             docker_file = file(filepath, 'w+')

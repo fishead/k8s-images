@@ -1,6 +1,5 @@
-# mirror k8s images from gcr.io
-
 ## Howto
+
 1. Generate Dockerfiles
 ```shell
 python ./gen.py
