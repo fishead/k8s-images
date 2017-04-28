@@ -23,7 +23,8 @@ IMAGES = [
     'quay.io/calico/node',
     'quay.io/calico/cni',
     'quay.io/coreos/etcd',
-    'quay.io/calico/kube-policy-controller'
+    'quay.io/calico/kube-policy-controller',
+    'gcr.io/kubernetes-helm/tiller'
 ]
 
 
@@ -62,3 +63,4 @@ for image_url in IMAGES:
             raise
 
         print('FROM ' + image_url + ':' + tag, file=docker_file)
+
