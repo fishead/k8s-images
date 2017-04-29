@@ -26,7 +26,10 @@ IMAGES = [
     'quay.io/calico/kube-policy-controller',
     'gcr.io/kubernetes-helm/tiller',
     'gcr.io/google_containers/defaultbackend',
-    'gcr.io/google_containers/nginx-ingress-controller'
+    'gcr.io/google_containers/nginx-ingress-controller',
+    'gcr.io/google_containers/heapster-influxdb-amd64',
+    'gcr.io/google_containers/heapster-amd64',
+    'gcr.io/google_containers/heapster-grafana-amd64',
 ]
 
 
