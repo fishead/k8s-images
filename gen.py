@@ -35,6 +35,7 @@ IMAGES = [
     'gcr.io/google_containers/fluentd-elasticsearch',
     'gcr.io/google_containers/elasticsearch',
     'gcr.io/google_containers/exechealthz-amd64',
+    'gcr.io/google_containers/kube-state-metrics',
 ]
 
 
