@@ -34,6 +34,7 @@ IMAGES = [
     'gcr.io/google_containers/kibana',
     'gcr.io/google_containers/fluentd-elasticsearch',
     'gcr.io/google_containers/elasticsearch',
+    'gcr.io/google_containers/exechealthz-amd64',
 ]
 
 
