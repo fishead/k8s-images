@@ -30,6 +30,10 @@ IMAGES = [
     'gcr.io/google_containers/heapster-influxdb-amd64',
     'gcr.io/google_containers/heapster-amd64',
     'gcr.io/google_containers/heapster-grafana-amd64',
+    'gcr.io/google_containers/cluster-proportional-autoscaler-amd64',
+    'gcr.io/google_containers/kibana',
+    'gcr.io/google_containers/fluentd-elasticsearch',
+    'gcr.io/google_containers/elasticsearch',
 ]
 
 
