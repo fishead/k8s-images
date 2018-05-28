@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import urllib2
+from urllib import request, error
+import images
 import json
 import os
-import images
 
 
 def gen_v1_list_tags_url(namespace, repository):
@@ -31,7 +31,8 @@ def to_kebab_case(str):
 for image_url in images.IMAGES:
     print('dealing with ' + image_url)
 
-    raw_json = urllib2.urlopen(get_tag_url(image_url)).read()
+    req = request.Request(get_tag_url(image_url))
+    raw_json = request.urlopen(req).read()
     parsed_json = json.loads(raw_json)
 
     try:
@@ -47,10 +48,10 @@ for image_url in images.IMAGES:
         filepath = os.path.join(cwd, dir_name, tag, 'Dockerfile')
 
         try:
-            docker_file = file(filepath, 'w+')
+            docker_file = open(filepath, 'w+')
 
         except IOError:
             os.makedirs(os.path.dirname(filepath))
-            docker_file = file(filepath, 'w+')
+            docker_file = open(filepath, 'w+')
 
         print('FROM ' + image_url + ':' + tag, file=docker_file)

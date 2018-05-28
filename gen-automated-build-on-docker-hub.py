@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from urllib import request, error
+import images
 import json
 import os
-import images
-from urllib import request, error
 
 
 # #############################################################################
