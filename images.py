@@ -24,6 +24,7 @@ IMAGES = [
     'gcr.io/google_containers/kubernetes-dashboard-amd64',
     'gcr.io/google_containers/nginx-ingress-controller',
     'gcr.io/google_containers/pause-amd64',
+    'gcr.io/google-containers/hyperkube',
     'gcr.io/kubernetes-helm/tiller',
     'quay.io/calico/cni',
     'quay.io/calico/ctl',
@@ -36,7 +37,10 @@ IMAGES = [
     'quay.io/coreos/flannel',
     'quay.io/coreos/hyperkube',
     'quay.io/external_storage/local-volume-provisioner',
+    'quay.io/jetstack/cert-manager-controller',
+    'quay.io/jetstack/cert-manager-ingress-shim',
     'quay.io/kubernetes-ingress-controller/nginx-ingress-controller',
+    'quay.io/kubespray/cephfs-provisioner',
     'quay.io/l23network/k8s-netchecker-agent',
     'quay.io/l23network/k8s-netchecker-server',
 ]
