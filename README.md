@@ -1,4 +1,5 @@
-<img src="https://github.com/kubernetes/kubernetes/raw/master/logo/logo.png" width="100">
+<img src="https://www.docker.com/sites/default/files/vertical.png" style="width: 100px" />
+<img src="https://github.com/kubernetes/kubernetes/raw/master/logo/logo.png" style="width: 100px; margin-left: 20px;" />
 
 ## What this project for? | 这个项目是用来干什么的？
 1. take a docker image url
