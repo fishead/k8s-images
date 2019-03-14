@@ -22,13 +22,11 @@
 
 2. Create [Automated builds](https://docs.docker.com/docker-cloud/builds/automated-build/) on Docker Hub
 ```shell
-./gen-automated-build-on-docker-hub.py
+./gen-automated-build-on-docker-hub.py [tag-filter-regexp]
 ```
-
+> `tag-filter-regexp:` regexp for filter image tags, to avoid DDOS docker.io. default value `^(latest|v?\d{1,3}(\.\d+)*((-amd64)|(_coreos\.\d)|(-k8s\d+\.\d+))?)$`
 
 ## Todo
-- [ ] filter tags
-
 
 ## Disclaimer
 The code is really rough, use it with caution.

@@ -5,7 +5,7 @@ from urllib import request, error
 import images
 import json
 import os
-
+import re
 
 # #############################################################################
 # ######################### config there variables ############################
@@ -23,6 +23,7 @@ docker_file_provider = 'github'
 docker_file_provider_repo_name = 'fishead/k8s-images'
 _base_url = 'https://hub.docker.com/v2'
 
+default_tag_filter_re = '''^(latest|v?\d{1,3}(\.\d+)*((-amd64)|(_coreos\.\d)|(-k8s\d+\.\d+))?)$'''
 
 def json_stringify(obj):
     return json.dumps(obj).encode('utf8')
@@ -91,8 +92,10 @@ def create_autobuild_tag(token, namespace, repository, image_tag, dockerfile_loc
     return json_parse(res.read())
 
 
-def update_autobuild_tag(token, namespace, repository, autobuild_tag_id, image_tag, dockerfile_location, source_type='Branch', source_name='master'):
-    update_autobuild_tag_url = _base_url + '/repositories/' + namespace + '/' + repository + '/autobuild/tags/' + str(autobuild_tag_id)
+def update_autobuild_tag(token, namespace, repository, autobuild_tag_id, image_tag, \
+                            dockerfile_location, source_type='Branch', source_name='master'):
+    update_autobuild_tag_url = _base_url + '/repositories/' + namespace + '/' + repository \
+                                + '/autobuild/tags/' + str(autobuild_tag_id)
     headers = {
         'Content-Type': 'application/json',
         'Authorization': 'JWT ' + token,
@@ -111,7 +114,8 @@ def update_autobuild_tag(token, namespace, repository, autobuild_tag_id, image_t
 
 
 def delete_autobuild_tag(token, namespace, repository, autobuild_tag_id):
-    delete_autobuild_tag_url = _base_url + '/repositories/' + namespace + '/' + repository + '/autobuild/tags/' + str(autobuild_tag_id) + '/'
+    delete_autobuild_tag_url = _base_url + '/repositories/' + namespace + '/' \
+                                + repository + '/autobuild/tags/' + str(autobuild_tag_id) + '/'
     headers = {
         'Authorization': 'JWT ' + token,
     }
@@ -139,7 +143,7 @@ def _request(url, method='GET', data=None, headers={}, timeout=10):
     return request.urlopen(req, timeout=timeout)
 
 
-def to_kebab_case(str):
+def normalize_image_url(str):
     return str.replace('/', '.')
 
 
@@ -152,15 +156,23 @@ if __name__ == '__main__':
 
     assert token, 'username and/or password wrong'
 
+    tag_filter = re.compile(default_tag_filter_re)
+    try:
+        tag_filter = re.compile(os.sys.argv[1])
+    except:
+        print('use default tag filter')
+
     cwd = os.getcwd()
 
     for image_url in images.IMAGES:
         print('image: ' + image_url)
 
-        dir_name = to_kebab_case(image_url)
+        dir_name = normalize_image_url(image_url)
         image_repo_path = os.path.join(cwd, dir_name)
 
-        tags = [filename for filename in os.listdir(image_repo_path) if os.path.isdir(os.path.join(image_repo_path, filename))]
+        tags = [filename for filename in os.listdir(image_repo_path) \
+                    if os.path.isdir(os.path.join(image_repo_path, filename)) \
+                    and tag_filter.match(filename)]
 
         # make sure autobuild exists
         try:
