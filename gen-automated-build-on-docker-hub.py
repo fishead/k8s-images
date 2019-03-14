@@ -198,8 +198,10 @@ if __name__ == '__main__':
 
         exists_build_tags = autobuild.get('build_tags')
 
-        # remove exists tags
-        for exists_build_tag in exists_build_tags:
+        # remove unwanted exists tags
+        for exists_build_tag in [exists_build_tag for exists_build_tag in exists_build_tags \
+                if exists_build_tag.get('name') not in tags]:
+            print('\ttag: {:30}{:20}{}'.format(exists_build_tag.get('name'), 'unwanted', 'deleting'))
             delete_autobuild_tag(
                 token,
                 namespace=docker_hub_username,
@@ -207,8 +209,14 @@ if __name__ == '__main__':
                 autobuild_tag_id=exists_build_tag.get('id'),
             )
 
+        exists_tags = [exists_build_tag.get('name') for exists_build_tag in exists_build_tags]
         for tag in tags:
-            print('\ttag: ' + tag)
+            if (tag in exists_tags):
+                print('\ttag: {:30}{:20}{}'.format(tag, 'exists', 'skipping'))
+                continue
+            else:
+                print('\ttag: {:30}{:20}{}'.format(tag, 'not exists', 'creating'))
+
             docker_file_location = os.path.join('/', dir_name, tag)
 
             create_autobuild_tag(
