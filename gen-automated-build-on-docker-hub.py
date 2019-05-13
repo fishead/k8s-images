@@ -6,6 +6,7 @@ import images
 import json
 import os
 import re
+import sys
 
 # #############################################################################
 # ######################### config there variables ############################
@@ -148,6 +149,9 @@ def normalize_image_url(str):
 
 
 if __name__ == '__main__':
+    print('broken code, stop')
+    sys.exit(1)
+
     try:
         login_res = login(username=docker_hub_username, password=docker_hub_password)
         token = login_res.get('token')
